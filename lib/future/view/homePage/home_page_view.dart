@@ -1,9 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 import 'package:travel_app/core/constans/color_theme.dart';
+import 'package:travel_app/core/constans/image_constants.dart';
 import 'package:travel_app/core/constans/text_constants.dart';
 import 'package:travel_app/product/widgets/clipper_widget.dart';
+import 'package:travel_app/product/widgets/upcomming_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -13,6 +14,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  TextStyle? get myStyle => context.textTheme.headline5
+      ?.copyWith(fontWeight: FontWeight.w700, color: AppColor().textColor);
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -20,9 +23,108 @@ class _HomeScreenState extends State<HomeScreen> {
         body: ListView(
           children: [
             buildClipPath(context),
-            buildFavSee(context),
+            buildBody(context)
           ],
         ),
+      ),
+    );
+  }
+
+  Padding buildBody(BuildContext context) {
+    return Padding(
+            padding: context.horizontalPaddingNormal,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                buildFavSee(context),
+                builViewBuilder(context),
+                Text(
+                  UITrravelConstans.sutitle2,
+                  style: myStyle,
+                ),
+                UpComming(items: upcomming()),
+                SizedBox(
+                  height: context.height * 0.02,
+                ),
+                Text(
+                  UITrravelConstans.sutitle3,
+                  style: myStyle,
+                ),
+              buildListViewCars()
+              ],
+            ),
+          );
+  }
+
+  ListView buildListViewCars() {
+    return ListView.builder(
+                shrinkWrap: true,
+                itemCount: 5,
+                itemBuilder: (context, index) =>   Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 5,
+                              offset: Offset(1, 1),
+                              color: Colors.grey)
+                        ]),
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.car_rental,
+                        color: Colors.blue,
+                      ),
+                      title: Text(
+                        'Jannuary 14, Monday',
+                        style: context.textTheme.bodyText1?.copyWith(
+                            color: AppColor().blue,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(
+                        '\$10',
+                        style: context.textTheme.subtitle2?.copyWith(color: AppColor().blue),
+                      ),
+                      trailing: Icon(Icons.phone,color: Colors.green,),
+                    ),
+                  ),
+                ),);
+  }
+
+  SizedBox builViewBuilder(BuildContext context) {
+    return SizedBox(
+      height: context.dynamicHeight(0.2),
+      child: ListView.builder(
+        itemCount: 4,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: context.horizontalPaddingNormal,
+            child: Column(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(60),
+                  child: Image.network(
+                    'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8aHVtYW58ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80',
+                    height: context.height * 0.1,
+                    width: context.dynamicWidth(0.2),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Text(
+                  'Elgiz Cebrayilov',
+                  style: context.textTheme.subtitle1
+                      ?.copyWith(color: AppColor().blue),
+                ),
+                Text('Developer',
+                    style: context.textTheme.subtitle2
+                        ?.copyWith(color: context.randomColor)),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
@@ -43,15 +145,6 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             buildHeaderMenu(context),
             buildTextField(context),
-            SizedBox(
-              height: context.dynamicHeight(0.2),
-              child: ListView.builder(
-                itemCount: 4,
-                itemBuilder: (context, index) {
-                  return Text('data');
-                },
-              ),
-            )
           ],
         ),
       ),
@@ -63,8 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
       contentPadding: EdgeInsets.all(0),
       leading: Text(
         UITrravelConstans.sutitle1,
-        style: context.textTheme.headline5?.copyWith(
-            fontWeight: FontWeight.w700, color: AppColor().textColor),
+        style: myStyle,
       ),
       trailing: TextButton(
         onPressed: () {},
