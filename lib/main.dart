@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:travel_app/future/view/onBoardingPage/onboarding_view_page.dart';
+
+import 'future/view/homePage/home_page_view.dart';
  
 void main() => runApp(MyApp());
  
@@ -9,7 +10,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       
       title: 'Material App',
-      home:OnBoardingPage(),
+      home:HomeScreen(),
     );
   }
 }

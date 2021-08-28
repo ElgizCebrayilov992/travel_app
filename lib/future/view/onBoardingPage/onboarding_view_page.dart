@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 import 'package:travel_app/core/constans/app_constantsa.dart';
 import 'package:travel_app/core/constans/text_constants.dart';
+import 'package:travel_app/future/view/homePage/home_page_view.dart';
 
 class OnBoardingPage extends StatelessWidget {
   @override
@@ -16,14 +17,7 @@ class OnBoardingPage extends StatelessWidget {
             children: [
               buildTitle(context),
               buildImagesText(context),
-              Container(
-                //color: Colors.red,
-                height: context.dynamicHeight(0.08),
-                width: context.dynamicWidth(0.4),
-                child: ElevatedButton(onPressed: () {
-                  
-                }, child: Text(UITrravelConstans.onBoardingButton),style: ElevatedButton.styleFrom(primary: Colors.indigo,textStyle: context.textTheme.headline5),),
-              )
+              buildButton(context)
             ],
           ),
         ),
@@ -31,7 +25,28 @@ class OnBoardingPage extends StatelessWidget {
     );
   }
 
-   buildImagesText(BuildContext context) {
+  Container buildButton(BuildContext context) {
+    return Container(
+      //color: Colors.red,
+      height: context.dynamicHeight(0.08),
+      width: context.dynamicWidth(0.4),
+      child: ElevatedButton(
+        onPressed: () {
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => HomeScreen(),
+              ),
+              (route) => false);
+        },
+        child: Text(UITrravelConstans.onBoardingButton),
+        style: ElevatedButton.styleFrom(
+            primary: Colors.indigo, textStyle: context.textTheme.headline5),
+      ),
+    );
+  }
+
+  buildImagesText(BuildContext context) {
     return Expanded(
       child: Column(
         children: [
